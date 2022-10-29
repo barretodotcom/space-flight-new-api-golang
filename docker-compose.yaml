@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  api:
+    image: golang:1.19-alpine3.16
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/go/src/
+    depends_on:
+      - db
+  db:
+    container_name: mongodb
+    image: mongo:6.0.2
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=articles
+      - MONGO_INITDB_ROOT_USERNAME=docker
+      - MONGO_INITDB_ROOT_PASSWORD=mongo
+    volumes:
+      - ./.docker/dbdata:/data/db
+      - ./.docker/mongo:/docker-entrypoint-initdb.d

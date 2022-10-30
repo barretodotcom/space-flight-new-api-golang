@@ -1,5 +1,7 @@
 FROM golang:1.19-alpine3.16
 
-WORKDIR /go/src
+EXPOSE 3000
 
-COPY . .
+WORKDIR /go/src/
+
+RUN go run main.go

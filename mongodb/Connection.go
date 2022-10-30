@@ -12,7 +12,7 @@ import (
 func GetDB() *mongo.Database {
 
 	uri :=
-		`mongodb://` + os.Getenv("MONGO_NAME") + `:` + os.Getenv("MONGO_PASSWORD") + `@localhost:` + os.Getenv("MONGO_PORT")
+		`mongodb://` + os.Getenv("MONGO_NAME") + `:` + os.Getenv("MONGO_PASSWORD") + `@db:` + os.Getenv("MONGO_PORT")
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 
 	if err != nil {

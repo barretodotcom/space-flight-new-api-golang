@@ -2,6 +2,7 @@ version: '3'
 
 services:
   api:
+    container_name: api_go
     image: golang:1.19-alpine3.16
     restart: always
     ports:
@@ -10,6 +11,9 @@ services:
       - .:/go/src/
     depends_on:
       - db
+    environment:
+      - GO111MODULE=on
+    command: go run main.go
   db:
     container_name: mongodb
     image: mongo:6.0.2

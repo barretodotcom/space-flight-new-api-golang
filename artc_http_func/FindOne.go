@@ -13,7 +13,7 @@ import (
 )
 
 func FindOne(w http.ResponseWriter, r *http.Request) {
-	db := mongodb.GetDB()
+	db, _ := mongodb.GetDB()
 	defer db.Client().Disconnect(context.Background())
 
 	id := mux.Vars(r)["id"]

@@ -12,10 +12,9 @@ import (
 
 func InsertArticle(w http.ResponseWriter, r *http.Request) {
 
-	db := mongodb.GetDB()
+	db, _ := mongodb.GetDB()
 	defer db.Client().Disconnect(context.Background())
 	var article structs.Article
-
 	json.NewDecoder(r.Body).Decode(&article)
 
 	registerExists := db.Collection("articles").FindOne(r.Context(), bson.D{

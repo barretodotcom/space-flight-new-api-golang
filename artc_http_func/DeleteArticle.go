@@ -15,7 +15,7 @@ import (
 func DeleteArticle(w http.ResponseWriter, r *http.Request) {
 
 	id := mux.Vars(r)["id"]
-	db := mongodb.GetDB()
+	db, _ := mongodb.GetDB()
 	defer db.Client().Disconnect(context.Background())
 	parsedId, err := strconv.ParseInt(id, 10, 12)
 

@@ -15,7 +15,7 @@ import (
 
 func RefreshDocuments() {
 	fmt.Println("[ Space Flight ] Verificando necessidade de atualização")
-	db := mongodb.GetDB()
+	db, _ := mongodb.GetDB()
 	defer db.Client().Disconnect(context.Background())
 	apiUrl := os.Getenv("ARTICLES_API_URL")
 
@@ -30,10 +30,9 @@ func RefreshDocuments() {
 	}
 
 	json.NewDecoder(response.Body).Decode(&articles)
-
 	for _, v := range articles {
 		documentExists := db.Collection("articles").FindOne(context.Background(), bson.D{{Key: "id", Value: v.Id}})
-
+		fmt.Println(documentExists.Err())
 		if documentExists.Err() == mongo.ErrNoDocuments {
 			fmt.Printf("Nenhum documento, inserindo novos registros %d \n", v.Id)
 

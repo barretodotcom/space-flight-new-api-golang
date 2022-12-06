@@ -13,13 +13,12 @@ import (
 )
 
 func GetArticles(w http.ResponseWriter, r *http.Request) {
-	db := mongodb.GetDB()
+	db, _ := mongodb.GetDB()
 	defer db.Client().Disconnect(context.Background())
 
 	array, err := db.Collection("articles").Find(context.TODO(), bson.D{})
 
 	var articles structs.Articles
-
 	for array.Next(r.Context()) {
 		result := structs.Article{}
 
@@ -29,7 +28,6 @@ func GetArticles(w http.ResponseWriter, r *http.Request) {
 		}
 		articles.Articles = append(articles.Articles, result)
 	}
-
 	if err != nil {
 		fmt.Print(err.Error())
 		w.Write([]byte(err.Error()))

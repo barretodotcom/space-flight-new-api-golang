@@ -13,7 +13,7 @@ import (
 
 func PutArticle(w http.ResponseWriter, r *http.Request) {
 
-	db := mongodb.GetDB()
+	db, _ := mongodb.GetDB()
 	defer db.Client().Disconnect(context.Background())
 
 	var article structs.Article
